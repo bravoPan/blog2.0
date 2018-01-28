@@ -1,0 +1,51 @@
+.ui.basic.segment.head {
+    background-image: url('../img/man.png');
+    height: 400px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+
+#header-word {
+    font-family: 'Lobster', cursive;
+    font-size: 50px;
+    color: white;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 10%;
+}
+
+#subheader-word {
+    font-family: 'Lobster', cursive;
+    font-size: 30px;
+    color: white;
+    position: absolute;
+    top: 80%;
+    left: 75%;
+}
+
+.ui.very.big.segment {
+    margin-top: 50px;
+}
+
+#siderbar-menu {
+    margin-top: 50px;
+    width: 140px;
+    margin-left: 30px;
+}
+
+#pagenator {
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
+
+#article-title {
+    margin-top: 5px;
+    font-family: 'Fresca', sans-serif;
+}
+
+#title-icon {
+    margin-left: 20px;
+}

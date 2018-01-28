@@ -1,0 +1,101 @@
+#background-picture {
+    width: 100%;
+    padding-bottom: 400px;
+    background: #f5f5f5 no-repeat 50%;
+    background-size: cover;
+    margin-bottom: 16px;
+    max-width: 100%;
+    position: relative;
+}
+
+#subtitle {
+    color: rgba(0,0,0,.42);
+    margin:0;
+    padding:0;
+    font-size: 30px;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+#time {
+    color: rgba(0, 0, 0, .42);
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Droid Sans Fallback, Microsoft YaHei, sans-serif;
+    font-weight: 400;
+    padding:0;
+}
+
+#title{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.background_script {
+    position: absolute;
+    font-family: Avenir Next, PingFang SC, Hiragino Sans GB, Droid Sans Fallback, Microsoft YaHei, sans-serif;
+    font-weight: 900;
+    font-size: 30px;
+    color: white;
+    transform: translate(-50%, -50%);
+    border: none;
+}
+
+#content-text {
+    font-family: 'Kurale', serif;
+
+}
+
+.home.very.big.icon {
+    color: white;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    right: 10%;
+    top: 15%;
+}
+
+.ui.error.tiny.form {
+    width: 680px;
+}
+
+#next-article {
+    padding:20px 0;
+    border-top: 1px solid rgba(0, 0, 0, .08);
+}
+
+#next-article > div > h3 {
+    letter-spacing: 1px;
+    color: rgba(0, 0, 0, .42);
+    font-weight: 300;
+    margin:0;
+}
+
+#next-article > div > a {
+    color: rgba(0, 0, 0, .98);
+}
+
+#next-article > div > a > strong {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#next-article > div > a > p {
+    padding: 0;
+}
+
+div .content{
+    padding:0;
+}
+
+div .metadata{
+    padding: 0;
+}
+
+#date {
+    margin:0;
+}
+
+#last-part {
+    padding: 30px 0;
+    background-color: rgba(0,0,0,.04);
+}

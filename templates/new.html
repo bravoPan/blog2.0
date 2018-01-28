@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css/semantic.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <script type="text/javascript" src="js/jquery.js">
+
+    </script>
+    <script type="text/javascript" src="css/semantic.js">
+
+    </script>
+</head>
+<body>
+
+    <div class="ui sidebar inverte top five item menu">
+
+        <div class="item">
+            <div class="ui dropdown item" id="hideden-dropdown">
+                类目
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a href="#" class="item">Electronics</a>
+                    <a href="#" class="item">Electronics</a>
+                    <a href="#" class="item">Electronics</a>
+                </div>
+            </div>
+        </div>
+
+        <a class="item">
+            2
+        </a>
+        <a class="item">
+            3
+        </a>
+        <a href="#" class="item">4</a>
+        <a href="#" class="item">5</a>
+    </div>
+
+    <div class="pusher">
+        <div class="ui button" id="menu">
+            menu
+        </div>
+
+        <button type="button" name="button" class="ui red button" id="tran-bun">TestDimmer</button>
+
+        <div class="ui segment" id="test-tran" style="margin:10%;">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+            laborum.
+        </div>
+        =
+    </div>
+
+
+    <script>
+        $('#menu').click(function () {
+            $('.sidebar')
+                    .sidebar('setting', 'transition', 'overlay')
+                    .sidebar('toggle')
+            ;
+        }),
+                $(".ui.inline.dropdown").dropdown('show'),
+                $('#hideden-dropdown').dropdown('show'),
+                $('#test-tran')
+                        .transition('jiggle')
+        ;
+    </script>
+
+</body>
+</html>

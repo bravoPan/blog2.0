@@ -1,0 +1,28 @@
+#background-picture{
+    background-image: url('../img/sky.png');
+    height: 400px;
+    background-size: cover;
+}
+
+#background-script{
+    position: absolute;
+    font-family: 'Lobster', cursive;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 10%;
+}
+
+#content-text{
+    font-family: 'Kurale', serif;
+}
+
+.home.very.big.icon {
+    color: white;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 10%;
+    top: 15%;
+}
+
