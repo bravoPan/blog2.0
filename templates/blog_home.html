@@ -8,6 +8,9 @@
     <link rel="stylesheet" href={% static "css/pan_blog.css" %}>
     <link href="https://fonts.googleapis.com/css?family=Roboto|Timmana" rel="stylesheet">
     <link rel="icon" href="{% static "img/logo.png" %}">
+    <script rel="script" src={% static "js/jquery.js" %}></script>
+    <script rel="script" src={% static "js/jquery.waypoints.min.js" %}></script>
+    <script rel="script" src="{% static "js/infinite.min.js" %}"></script>
 </head>
 <body>
 
@@ -49,52 +52,94 @@
 
 <div class="main">
 
-    {% for article in article_list %}
-        <div class="inner">
-            <div class="item Article Cover" lang="zh">
-                <a class="item-cover" href="{% url 'content' article.id %}">
+    <div class="infinite-container">
+        {% for article in article_list %}
+            <div class="infinite-item">
+            <div class="inner">
+                <div class="item Article Cover" lang="zh">
+                    <a class="item-cover" href="{% url 'content' article.id %}">
+                        {% if article.image_url %}
+                            <div class="item-cover-image">
+                                <div class="cover-image"
+                                     style="background-image:url({{ article.image_url }}); height: 100%; width: 100%"></div>
+                            </div>
+                        {% endif %}
 
-                    {# some old does not have bagpic #}
-                    {% if article.image_url %}
-                        <div class="item-cover-image">
-                            <div class="cover-image"
-                                 style="background-image:url({{ article.image_url }}); height: 100%; width: 100%"></div>
+                        <div class="item-cover-inner">
+                            <time class="date">{{ article.date }}</time>
+                            <h3>{{ article.title }}</h3>
+                            <h4>{{ article.description }}</h4>
                         </div>
-                    {% endif %}
-
-                    <div class="item-cover-inner">
-                        <time class="date">{{ article.date }}</time>
-                        <h3>{{ article.title }}</h3>
-                        <h4>{{ article.description }}</h4>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
-        </div>
-    {% endfor %}
-
-    <div class="inner" id="read-more" style="height: 40px; padding: 20px;">
-        {% if article_list.has_previous %}
-            <a href="?page={{ article_list.previous_page_number }}" id="nav-left">
-                ←Before
-            </a>
-        {% else %}
-            <a id="nav-left" class="ui disable nomore">
-                No more..
-            </a>
-        {% endif %}
+            </div>
+        {% endfor %}
 
         {% if article_list.has_next %}
-            <a href="?page={{ article_list.next_page_number }}" id="nav-right">
-                Next→
-            </a>
-        {% else %}
-            <a id="nav-right" class="ui disable nomore">
-                No more..
-            </a>
+            <a class="infinite-more-link" href="?page={{ article_list.next_page_number }}"></a>
         {% endif %}
+
+        <div class="loading" style="display: none;">
+            Loading...
+        </div>
     </div>
+
+{#        <div class="infinite-container">#}
+{#            {% for article in article_list %}#}
+{#                <div class="infinite-item" style="height: 300px;">#}
+{#                    {{ article.title }}#}
+{##}
+{#                </div>#}
+{#            {% endfor %}#}
+{##}
+{#            {% if article_list.has_next %}#}
+{#                <a class="infinite-more-link" href="?page={{ article_list.next_page_number }}"></a>#}
+{#            {% endif %}#}
+{##}
+{#            <div class="loading" style="display: none;">#}
+{#                Loading...#}
+{#            </div>#}
+{#        </div>#}
+
+    {#    <div class="inner" id="read-more" style="height: 40px; padding: 20px;">#}
+    {#        {% if article_list.has_previous %}#}
+    {#            <a href="?page={{ article_list.previous_page_number }}" id="nav-left">#}
+    {#                ←Before#}
+    {#            </a>#}
+    {#        {% else %}#}
+    {#            <a id="nav-left" class="ui disable nomore">#}
+    {#                No more..#}
+    {#            </a>#}
+    {#        {% endif %}#}
+    {##}
+    {#        {% if article_list.has_next %}#}
+    {#            <a href="?page={{ article_list.next_page_number }}" id="nav-right">#}
+    {#                Next→#}
+    {#            </a>#}
+    {#        {% else %}#}
+    {#            <a id="nav-right" class="ui disable nomore">#}
+    {#                No more..#}
+    {#            </a>#}
+    {#        {% endif %}#}
+    {#    </div>#}
 </div>
 
+<script>
+{#    var content = $(".infinite-container")[0];#}
+    var infinate = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+        onBeforePageLoad: function () {
+            $('.loading').show();
+        },
+        onAfterPageLoad: function () {
+            $('.loading').hide();
+        }
+    });
+
+{#    var inner_images = $(".a")#}
+
+</script>
 
 </body>
 </html>

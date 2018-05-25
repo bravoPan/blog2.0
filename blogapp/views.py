@@ -43,6 +43,7 @@ def blog_content(request, page_num, error_form=None):
     replys = [x for x in comments_for_this_article if x not in comments]
     context['comments'] = comments
     context['replys'] = replys
+
     if error_form is not None:
         context['form'] = error_form
     else:
@@ -76,9 +77,11 @@ def comment(request, page_num):
         return blog_content(request, page_num, error_form=form)
     return redirect(to="content", page_num=page_num)
 
+
 def label_has_chilren(parent):
     parent.has_children = True
     parent.save()
+
 
 def check_time_zone():
     for i in Article.objects.all():

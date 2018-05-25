@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{% static "css/highlight.css" %}">
     <link rel="stylesheet" href="{% static "css/git.css" %}">
     <link rel="icon" href="{% static "img/logo.png" %}">
+    <link rel="stylesheet" href="{% static "css/photoswipe/photoswipe.css" %}">
+    <link rel="stylesheet" href="{% static "css/photoswipe/default-skin.css" %}">
+    <link rel="stylesheet" href="{% static "css/photoswipe/my-style.css" %}">
     <script rel="script" src={% static "js/jquery.js" %}></script>
     <script rel="script" src={% static "js/semantic.js" %}></script>
     <script type="text/x-mathjax-config">
@@ -19,8 +22,10 @@
             tex2jax: {inlineMath: [['$', '$']]}
         });
 
-
     </script>
+    <script src={% static "js/photoswipe/photoswipe-ui-default.min.js" %}></script>
+    <script src={% static "js/photoswipe/photoswipe.min.js" %}></script>
+{#    <script src={% static "js/photoswipe/remodel_markdown.js" %}></script>#}
     <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
@@ -47,9 +52,10 @@
 </h1>
 
 {{ detail.content | custom_markdown }}
+
 <div style="height:25px;">
     <div style="float: right;">
-        <a href="{% url "cate_filter" detail.type  %}" style="display: block">
+        <a href="{% url "cate_filter" detail.type %}" style="display: block">
             # {{ detail.type }}
         </a>
     </div>
@@ -81,7 +87,7 @@
                             {% endif %}
                         </a>
                         <div class="content">
-                            <a class="author">{{ comment.name }}</a>
+                            <a class="author">{{ comment.name.0 }}</a>
 
                             <div class="metadata" id="date">
                                 <span class="date">{{ comment.auto_date }}</span>
@@ -187,7 +193,6 @@
 
         </div>
     </div>
-    </div>
 
     {# comment form #}
     <div id="write-comment" style="display: none; padding:30px;">
@@ -229,6 +234,7 @@
     </div>
 
 </section>
+
 
 
 <script>
