@@ -73,6 +73,7 @@ def comment(request, page_num):
         a = Article.objects.get(id=page_num)
         c = Comment(name=name, comment=comment, belong_to=a, email=email, post_myself=myself, parent=parent_model)
         c.save()
+        # c.avatar_color =
     else:
         return blog_content(request, page_num, error_form=form)
     return redirect(to="content", page_num=page_num)
