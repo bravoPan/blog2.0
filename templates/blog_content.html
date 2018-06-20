@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 {% load custom_markdown %}
+{% load avatar_filter %}
 <html>
 <head>
     <meta charset="utf-8">
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="{% static "css/photoswipe/photoswipe.css" %}">
     <link rel="stylesheet" href="{% static "css/photoswipe/default-skin.css" %}">
     <link rel="stylesheet" href="{% static "css/photoswipe/my-style.css" %}">
+    <link rel="stylesheet" href="{% static "css/avatar.css" %}">
     <script rel="script" src={% static "js/jquery.js" %}></script>
     <script rel="script" src={% static "js/semantic.js" %}></script>
     <script type="text/x-mathjax-config">
@@ -22,10 +24,14 @@
             tex2jax: {inlineMath: [['$', '$']]}
         });
 
+
+
+
+
     </script>
     <script src={% static "js/photoswipe/photoswipe-ui-default.min.js" %}></script>
     <script src={% static "js/photoswipe/photoswipe.min.js" %}></script>
-{#    <script src={% static "js/photoswipe/remodel_markdown.js" %}></script>#}
+    {#    <script src={% static "js/photoswipe/remodel_markdown.js" %}></script>#}
     <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
@@ -82,13 +88,19 @@
                                 <img src="{% static "img/pan.jpg" %}" style="width:35px; height:35px;"
                                      alt="">
                             {% else %}
-                                <img src="{% static "comment-avatar.jpg" %}" style="width:35px; height:35px;"
-                                     alt="">
+                                <div style="background-color:{{ comment.avatar_color }}"
+                                     class="avatar-block">{{ comment.name.0 }}</div>
+                                {#                                <img src="{% static "comment-avatar.jpg" %}" style="width:35px; height:35px;"#}
+                                {#                                     alt="">#}
                             {% endif %}
                         </a>
-                        <div class="content">
-                            <a class="author">{{ comment.name.0 }}</a>
 
+                        <div class="content">
+                            {% if comment.post_myself %}
+                                <a class="author">{{ comment.name }}</a>
+                            {% else %}
+                                <a class="author">{{ comment.name | cut_avatar_name }}</a>
+                            {% endif %}
                             <div class="metadata" id="date">
                                 <span class="date">{{ comment.auto_date }}</span>
                             </div>
@@ -98,7 +110,8 @@
                             </div>
 
                             <div class="actions">
-                                <a class="reply" onclick="switch_display('write-{{ comment.id }}')">Reply</a>
+                                <a class="reply" onclick="switch_display('write-{{ comment.id }}')"
+                                   style="color: #a0d6b4;">Reply</a>
                             </div>
 
                             {# your reply #}
@@ -160,13 +173,17 @@
                                                              style="width:35px; height:35px;"
                                                              alt="">
                                                     {% else %}
-                                                        <img src="{% static "comment-avatar.jpg" %}"
-                                                             style="width:35px; height:35px;"
-                                                             alt="">
+                                                        <div style="background-color:{{ reply.avatar_color }}"
+                                                             class="avatar-block">{{ reply.name.0 }}</div>
                                                     {% endif %}
                                                 </a>
                                                 <div class="content">
-                                                    <a class="author">{{ reply.name }}</a>
+                                                    {% if reply.post_myself %}
+                                                        <a class="author">{{ reply.name }}</a>
+                                                    {% else %}
+                                                        <a class="author">{{ reply.name | cut_avatar_name }}</a>
+                                                    {% endif %}
+
                                                     <div class="metadata">
                                                         <span class="date">{{ reply.auto_date }}</span>
                                                     </div>
@@ -234,7 +251,6 @@
     </div>
 
 </section>
-
 
 
 <script>

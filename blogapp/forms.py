@@ -3,8 +3,8 @@ from django.core.exceptions import ValidationError
 
 
 def words_validator(comment):
-    if len(comment) == 0:
-        raise ValidationError("Not enough words")
+    if len(comment) < 2:
+        raise ValidationError("Not enough words, Please ensure your name has at least two words!")
 
 
 def non_pan(comment):
