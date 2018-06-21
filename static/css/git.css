@@ -7,12 +7,19 @@ body {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 }
-ul, hr, h1, h2, h3, h4, h5, h6, blockquote, ol, p, pre, div, table {
+
+ul, hr, h1, h2, h3, h4, h5, h6, blockquote, ol, p, pre, table {
     margin-left: auto;
     margin-right: auto;
     max-width: 760px;
     line-height: 2;
 }
+
+/*div {*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    /*line-height:2;*/
+/*}*/
 
 body > *:first-child {
     margin-top: 0 !important;

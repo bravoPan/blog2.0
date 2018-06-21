@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{% static "css/photoswipe/default-skin.css" %}">
     <link rel="stylesheet" href="{% static "css/photoswipe/my-style.css" %}">
     <link rel="stylesheet" href="{% static "css/avatar.css" %}">
+    <link rel="stylesheet" href="{% static "css/colorbox.css" %}">
     <script rel="script" src={% static "js/jquery.js" %}></script>
     <script rel="script" src={% static "js/semantic.js" %}></script>
     <script type="text/x-mathjax-config">
@@ -25,13 +26,11 @@
         });
 
 
-
-
-
     </script>
     <script src={% static "js/photoswipe/photoswipe-ui-default.min.js" %}></script>
     <script src={% static "js/photoswipe/photoswipe.min.js" %}></script>
-    {#    <script src={% static "js/photoswipe/remodel_markdown.js" %}></script>#}
+    <script src="{% static "js/jquery.colorbox.js" %}"></script>
+    <script src="{% static "js/jquery.photoset-grid.js" %}"></script>
     <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
@@ -71,7 +70,8 @@
 <section style="padding:30px; background-color: rgba(0,0,0,.04);"></section>
 
 <section id="last-part">
-    <div id="ui comment" style="padding: 30px;">
+
+    <div id="ui comment">
         <div class="ui threaded comments">
             <h3 class="ui dividing header">Comments</h3>
             {# have no comments #}
@@ -252,9 +252,25 @@
 
 </section>
 
+<script>
+    $('.photoset-grid-lightbox').photosetGrid({
+    highresLinks: true,
+    rel: 'withhearts-gallery',
+    gutter: '4px',
+
+    onComplete: function () {
+        $('.photoset-grid-lightbox').attr('style', '');
+        $('.photoset-grid-lightbox a').colorbox({
+            photo: true,
+            scalePhotos: true,
+            maxHeight: '90%',
+            maxWidth: '90%'
+        });
+    }
+});
+</script>
 
 <script>
-
     function switch_display(id) {
         comment = document.getElementById(id);
         if (comment.style.display == "none") {
@@ -267,7 +283,6 @@
             comment.style.display = "none";
         }
     }
-
 </script>
 </body>
 </html>
