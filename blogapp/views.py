@@ -113,3 +113,7 @@ def check_time_zone():
         else:
             i.post_status = False
             i.save()
+
+
+def jump_bout_me(request):
+    return render(request, "about_me.html")

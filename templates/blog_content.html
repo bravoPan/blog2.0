@@ -6,6 +6,8 @@
 <head>
     <meta charset="utf-8">
     <title>{{ detail.title }} - pan blog</title>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link rel="apple-touch-icon">
     <link rel="stylesheet" href="{% static "css/blog_content.css" %}">
     <link rel="stylesheet" href="{% static "css/semantic.css" %}">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
@@ -13,9 +15,6 @@
     <link rel="stylesheet" href="{% static "css/highlight.css" %}">
     <link rel="stylesheet" href="{% static "css/git.css" %}">
     <link rel="icon" href="{% static "img/logo.png" %}">
-    <link rel="stylesheet" href="{% static "css/photoswipe/photoswipe.css" %}">
-    <link rel="stylesheet" href="{% static "css/photoswipe/default-skin.css" %}">
-    <link rel="stylesheet" href="{% static "css/photoswipe/my-style.css" %}">
     <link rel="stylesheet" href="{% static "css/avatar.css" %}">
     <link rel="stylesheet" href="{% static "css/colorbox.css" %}">
     <script rel="script" src={% static "js/jquery.js" %}></script>
@@ -24,9 +23,6 @@
         MathJax.Hub.Config({
             tex2jax: {inlineMath: [['$', '$']]}
         });
-
-
-
     </script>
     <script src={% static "js/photoswipe/photoswipe-ui-default.min.js" %}></script>
     <script src={% static "js/photoswipe/photoswipe.min.js" %}></script>
@@ -251,7 +247,6 @@
             </form>
         </div>
     </div>
-
 
 </div>
 

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from blogapp.views import blog, blog_content, comment
+from blogapp.views import blog, blog_content, comment, jump_bout_me
 from blogapp.api import article
 
 
@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^blog/$', blog, name="blog"),
     url(r'^content/(?P<page_num>\d+)$', blog_content, name="content"),
     url(r'^content/(?P<page_num>\d+)/comment$', comment, name="comment"),
-    url(r'^api/article', article)
+    url(r'^api/article', article),
+    url("about", jump_bout_me),
 ]
