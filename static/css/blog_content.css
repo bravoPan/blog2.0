@@ -100,6 +100,7 @@ div .metadata{
     padding-bottom: 30px;
     background-color: rgba(0,0,0,.04);
     padding-left:25%;
+    margin-top: 50px;
 }
 
 .photoset-grid-lightbox {
@@ -108,7 +109,6 @@ div .metadata{
     margin-bottom: 1em;
 }
 
-/*#comment-block {*/
-    /*position: relative;*/
-    /*left:25%;*/
-/*}*/
+#comment-block {
+    position: relative;
+}
