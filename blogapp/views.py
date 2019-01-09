@@ -4,6 +4,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blogapp.forms import CommentForm
 from django.utils import timezone
 
+avatar_background_color = (
+    ("black", "#4B515E"),
+    ("gray", "#ACB8B8"),
+    ("yellow", "#F2C42C"),
+    ("orange", "#EA9752"),
+    ("red", "#E84C3D")
+)
+
 
 # Create your views here.
 
@@ -43,6 +51,7 @@ def blog_content(request, page_num, error_form=None):
     replys = [x for x in comments_for_this_article if x not in comments]
     context['comments'] = comments
     context['replys'] = replys
+
     if error_form is not None:
         context['form'] = error_form
     else:
@@ -71,14 +80,27 @@ def comment(request, page_num):
             name = form.cleaned_data["name"]
         a = Article.objects.get(id=page_num)
         c = Comment(name=name, comment=comment, belong_to=a, email=email, post_myself=myself, parent=parent_model)
+        avatar_color = check_avatar_exist(c)
+        c.avatar_color = avatar_color
         c.save()
     else:
         return blog_content(request, page_num, error_form=form)
     return redirect(to="content", page_num=page_num)
 
+
+def check_avatar_exist(c):
+    color = Comment.objects.filter(name=c.name)
+    total_number = len(Comment.objects.all())
+    if color:
+        return color[0].avatar_color
+    else:
+        return avatar_background_color[(total_number + 1) % 5][1]
+
+
 def label_has_chilren(parent):
     parent.has_children = True
     parent.save()
+
 
 def check_time_zone():
     for i in Article.objects.all():
@@ -91,3 +113,7 @@ def check_time_zone():
         else:
             i.post_status = False
             i.save()
+
+
+def jump_bout_me(request):
+    return render(request, "about_me.html")

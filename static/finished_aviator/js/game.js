@@ -624,6 +624,8 @@ EnnemiesHolder.prototype.rotateEnnemies = function(){
       ambientLight.intensity = 2;
 
       removeEnergy();
+      removeEnergy();
+      removeEnergy();
       i--;
     }else if (ennemy.angle > Math.PI){
       ennemiesPool.unshift(this.ennemiesInUse.splice(i,1)[0]);

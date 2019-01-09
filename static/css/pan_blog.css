@@ -1,30 +1,30 @@
-body{
+body {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-size: 16px;
-    font-family: Roboto,Helvetica Neue,Helvetica,Aria,PingFang SC,Hiragino Sans GB,Droid Sans Fallback,Microsoft YaHei,sans-serif;
-    line-height:1.15;
+    font-family: Roboto, Helvetica Neue, Helvetica, Aria, PingFang SC, Hiragino Sans GB, Droid Sans Fallback, Microsoft YaHei, sans-serif;
+    line-height: 1.15;
     webkit-text-size-adjust: 100%;
 }
 
-.head{
+.head {
     line-height: 1.32;
     padding: 20px 0;
 }
 
-.info{
-    padding:120px 0 60px;
+.info {
+    padding: 120px 0 60px;
 }
 
-.head-logo{
+.head-logo {
     float: left;
     text-decoration: none;
     text-transform: uppercase;
-    color: rgba(0,0,0,.1);
+    color: rgba(0, 0, 0, .1);
     -webkit-transition: color .2s ease;
     transition: color .2s ease;
     font-weight: 700;
-    font-family: Avenir Next,PingFang SC,Hiragino Sans GB,Droid Sans Fallback,Microsoft YaHei,sans-serif;
+    font-family: Avenir Next, PingFang SC, Hiragino Sans GB, Droid Sans Fallback, Microsoft YaHei, sans-serif;
 }
 
 a {
@@ -35,11 +35,11 @@ div {
     display: block;
 }
 
-.info_logo img{
-    max-width:100%;
+.info_logo img {
+    max-width: 100%;
 }
 
-.info_logo{
+.info_logo {
     display: inline-block;
     float: left;
     width: 120px;
@@ -47,13 +47,13 @@ div {
     margin-right: 20px;
 }
 
-.info_logo .info_logo img{
+.info_logo .info_logo img {
     vertical-align: middle;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
-.info_main{
+.info_main {
     padding-top: 10px;
     overflow: hidden;
 }
@@ -65,20 +65,20 @@ div {
     color: #000;
 }
 
-.info_subtitle{
+.info_subtitle {
     margin: 0 0 10px;
     font-size: 22px;
     font-weight: 300;
     color: #9ea0a6;
 }
 
-h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6 {
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
     font-weight: bold;
 }
 
-h1{
+h1 {
     font-size: 2em;
     margin: .67em 0;
     display: block;
@@ -122,20 +122,21 @@ h4 {
     transform: translate(-50%, -50%);
     left: 50%;
     top: 51%;
-    font-weight:700;
+    font-weight: 700;
     filter: blur(1px);
 }
-div{
+
+div {
     display: block;
 }
 
-.main{
-    min-height:200px;
-    padding:40px 0;
+.main {
+    min-height: 200px;
+    padding: 40px 0;
 
 }
 
-.inner{
+.inner {
     max-width: 860px;
     margin: 0 auto;
     padding: 0 20px;
@@ -143,14 +144,14 @@ div{
     box-sizing: border-box;
 }
 
-.cover-image{
+.cover-image {
     width: 52%;
     flex-basis: 52%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
-.item-cover{
+.item-cover {
     display: flex;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -169,19 +170,19 @@ div{
     margin-top: 50px;
 }
 
-.item-cover-image{
+.item-cover-image {
     background-size: cover;
-    height:256px;
-    width:430px;
+    height: 256px;
+    width: 430px;
 }
 
-#cover-image{
+#cover-image {
     background: no-repeat, 50%;
     width: 52%;
     flex-basis: 52%;
     height: 230px;
     background-size: cover;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
 }
 
 #pagenator {
@@ -198,7 +199,7 @@ div{
     margin-left: 20px;
 }
 
-.item-cover-image > div{
+.item-cover-image > div {
     height: 0;
     padding-bottom: 60%;
     background: no-repeat 50%;
@@ -207,7 +208,7 @@ div{
 }
 
 .info_social a {
-    color: rgba(0,0,0,.68);
+    color: rgba(0, 0, 0, .68);
 }
 
 #content-markdown {
@@ -219,11 +220,11 @@ div{
 }
 
 .item {
-    border-top:1px solid rgba(0,0,0,.04);
+    border-top: 1px solid rgba(0, 0, 0, .04);
     padding: 20px 0 40px;
 }
 
-#cover-image{
+#cover-image {
     display: flex;
 }
 
@@ -236,35 +237,41 @@ div{
     box-sizing: border-box;
 }
 
-.date{
-    color: rgba(0,0,0,.1);
+.item-non-cover-inner {
+    padding-left: 40px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.date {
+    color: rgba(0, 0, 0, .1);
     font-size: 14px;
     font-weight: 600;
-    font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif;
     text-transform: uppercase;
     vertical-align: middle;
 }
 
-.item-cover-inner > h3 {
-    color: rgba(0,0,0,.98);
+.inner-title {
+    color: rgba(0, 0, 0, .98);
     font-weight: 400;
     font-size: 36px;
     margin: 10px 0 20px;
 }
 
-.item-cover-inner > h4 {
+.inner-description {
     font-weight: 300;
     font-size: 24px;
     margin: 0 0 20px;
     color: #9ea0a6;
 }
 
-nav{
+nav {
     display: block;
 }
 
 nav > a {
-    color: rgba(0,0,0,.64);
+    color: rgba(0, 0, 0, .64);
     text-decoration: none;
     border-bottom: 2px solid transparent;
     -webkit-transition: border-color .2s ease;
@@ -272,17 +279,17 @@ nav > a {
 }
 
 #read-more > a {
-    border-top: 4px solid rgba(0,0,0,.04);
-    color: rgba(0,0,0,.86);
+    border-top: 4px solid rgba(0, 0, 0, .04);
+    color: rgba(0, 0, 0, .86);
     font-size: 18px;
     text-transform: uppercase;
     text-decoration: none;
 }
 
-#nav-left{
+#nav-left {
     float: left;
 }
 
-#nav-right{
+#nav-right {
     float: right;
 }

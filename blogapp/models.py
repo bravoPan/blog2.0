@@ -39,12 +39,7 @@ class Comment(models.Model):
     post_myself = models.BooleanField(default=False)
     email = models.EmailField(blank=True)
     has_children = models.BooleanField(default=False)
+    avatar_color = models.CharField(max_length=20, null=True)
 
     def __str__(self):
         return self.name
-
-# for i in Article.objects.all():
-#     if i.image_url is "":
-#         i.image_url = "http://otr4re8c8.bkt.clouddn.com/sky.png"
-#         i.save()
-#     print(i.image_url)

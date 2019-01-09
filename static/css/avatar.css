@@ -1,0 +1,10 @@
+.avatar-block {
+    width:35px;
+    height:35px;
+    border-radius: 5px;
+    text-align:center;
+    line-height: 35px;
+    color: white;
+    font-family: Hiragino Sans, Georgia, STXihei, "Times New Roman";
+    font-size: 25px;
+}

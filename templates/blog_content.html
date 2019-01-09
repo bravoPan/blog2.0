@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 {% load static %}
 {% load custom_markdown %}
+{% load avatar_filter %}
 <html>
 <head>
     <meta charset="utf-8">
     <title>{{ detail.title }} - pan blog</title>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link rel="apple-touch-icon">
     <link rel="stylesheet" href="{% static "css/blog_content.css" %}">
     <link rel="stylesheet" href="{% static "css/semantic.css" %}">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
@@ -12,15 +15,19 @@
     <link rel="stylesheet" href="{% static "css/highlight.css" %}">
     <link rel="stylesheet" href="{% static "css/git.css" %}">
     <link rel="icon" href="{% static "img/logo.png" %}">
+    <link rel="stylesheet" href="{% static "css/avatar.css" %}">
+    <link rel="stylesheet" href="{% static "css/colorbox.css" %}">
     <script rel="script" src={% static "js/jquery.js" %}></script>
     <script rel="script" src={% static "js/semantic.js" %}></script>
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
             tex2jax: {inlineMath: [['$', '$']]}
         });
-
-
     </script>
+    <script src={% static "js/photoswipe/photoswipe-ui-default.min.js" %}></script>
+    <script src={% static "js/photoswipe/photoswipe.min.js" %}></script>
+    <script src="{% static "js/jquery.colorbox.js" %}"></script>
+    <script src="{% static "js/jquery.photoset-grid.js" %}"></script>
     <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
@@ -35,9 +42,9 @@
     <h1 class="background_script" style="bottom: 5%;left:10%;">Just Simple</h1>
 </div>
 
-<div id="time">
+<h6 id="time">
     {{ detail.date }}
-</div>
+</h6>
 
 <h1 id="title" style="margin-bottom:1.3em;">
     {{ detail.title }}
@@ -47,192 +54,221 @@
 </h1>
 
 {{ detail.content | custom_markdown }}
-<div style="height:25px;">
-    <div style="float: right;">
-        <a href="{% url "cate_filter" detail.type  %}" style="display: block">
-            # {{ detail.type }}
-        </a>
+
+
+{#<div style="float: right;height:25px">#}
+{#    <a href="{% url "cate_filter" detail.type %}" style="display: block">#}
+{#        # {{ detail.type }}#}
+{#    </a>#}
+{#</div>#}
+
+
+<div id="last-part">
+    <div id="comment-block">
+
+        <div id="ui comment">
+            <div class="ui threaded comments">
+                <h3 class="ui dividing header">Comments</h3>
+                {# have no comments #}
+                {% if comments.count == 0 %}
+                    <span> No one has been commented, give a comment.</span>
+
+                {% else %}
+
+                    {% for comment in comments %}
+                        <div class="ui comment">
+                            <a class="avatar">
+                                {# the photo of my self #}
+                                {% if comment.post_myself %}
+                                    <img src="{% static "img/pan.jpg" %}" style="width:35px; height:35px;"
+                                         alt="">
+                                {% else %}
+                                    <div style="background-color:{{ comment.avatar_color }}"
+                                         class="avatar-block">{{ comment.name.0 }}</div>
+                                    {#                                <img src="{% static "comment-avatar.jpg" %}" style="width:35px; height:35px;"#}
+                                    {#                                     alt="">#}
+                                {% endif %}
+                            </a>
+
+                            <div class="content">
+                                {% if comment.post_myself %}
+                                    <a class="author">{{ comment.name }}</a>
+                                {% else %}
+                                    <a class="author">{{ comment.name | cut_avatar_name }}</a>
+                                {% endif %}
+                                <div class="metadata" id="date">
+                                    <span class="date">{{ comment.auto_date }}</span>
+                                </div>
+
+                                <div class="text" style="padding:0;">
+                                    {{ comment.comment | custom_markdown }}
+                                </div>
+
+                                <div class="actions">
+                                    <a class="reply" onclick="switch_display('write-{{ comment.id }}')"
+                                       style="color: #a0d6b4;">Reply</a>
+                                </div>
+
+                                {# your reply #}
+                                <div id="write-{{ comment.id }}" style="display: none; padding:30px;">
+                                    <div class="ui dividing header">
+                                        Your Reply
+                                    </div>
+
+                                    <form class="ui error tiny form" method="post"
+                                          action="{% url "comment" detail.id %}"
+                                          style="">
+                                        {#   wrong form     #}
+                                        {% if form.errors %}
+                                            <div class="ui error message">
+                                                {{ form.errors }}
+                                            </div>
+                                            {% for hidden in form.hidden_fields %}
+                                                <div class="field">
+                                                    <input id="avatar_input" type="hidden" name="avatar">
+                                                </div>
+                                            {% endfor %}
+                                            {% for field in form.visible_fields %}
+                                                <div class="{{ field.errors|yesno:"error, " }} field">
+                                                    {{ field.label }}
+                                                    {{ field }}
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for field in form.visible_fields %}
+                                                <div class="field">
+                                                    {{ field.label }}
+                                                    {{ field }}
+                                                </div>
+                                            {% endfor %}
+                                            {% for hidden in form.hidden_fields %}
+                                                <input type="hidden" name="parent" id="id_parent"
+                                                       value="{{ comment.id }}">
+                                            {% endfor %}
+                                        {% endif %}
+                                        {% csrf_token %}
+                                        <button class="ui positive right labeled icon button" type="submit" id="sub-bun"
+                                                id="window_locate">
+                                            Submit it!
+                                            <i class="checkmark icon"></i>
+                                        </button>
+                                    </form>
+                                </div>
+
+
+                                {# if it has reply  #}
+                                {% if comment.has_children %}
+                                    {# filter the same id parent reply #}
+                                    <div class="comments" style="margin-top:10px; padding-top:20px;">
+                                        {% for reply in replys %}
+                                            {% if reply.parent == comment %}
+                                                <div class="comment" style="margin-bottom:35px">
+                                                    <a class="avatar">
+                                                        {# the photo of my self #}
+                                                        {% if reply.post_myself %}
+                                                            <img src="{% static "img/pan.jpg" %}"
+                                                                 style="width:35px; height:35px;"
+                                                                 alt="">
+                                                        {% else %}
+                                                            <div style="background-color:{{ reply.avatar_color }}"
+                                                                 class="avatar-block">{{ reply.name.0 }}</div>
+                                                        {% endif %}
+                                                    </a>
+                                                    <div class="content">
+                                                        {% if reply.post_myself %}
+                                                            <a class="author">{{ reply.name }}</a>
+                                                        {% else %}
+                                                            <a class="author">{{ reply.name | cut_avatar_name }}</a>
+                                                        {% endif %}
+
+                                                        <div class="metadata">
+                                                            <span class="date">{{ reply.auto_date }}</span>
+                                                        </div>
+                                                        <div class="text">{{ reply.comment }}</div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {# endfor the comment #}
+                    {% endfor %}
+
+                    {# endif the exclude conunt part #}
+                {% endif %}
+
+                <button class="ui right labeled icon button" onclick="switch_display('write-comment')"
+                        style="margin-top:30px;">
+                    Write
+                    <i class="write icon"></i>
+                </button>
+
+            </div>
+        </div>
+
+        {# comment form #}
+        <div id="write-comment" style="display: none; padding:30px;">
+            <h3 class="ui dividing header">
+                Your comment
+            </h3>
+
+            <form class="ui error tiny form" method="post" action="{% url "comment" detail.id %}" style="">
+                {#   wrong form     #}
+                {% if form.errors %}
+                    <div class="ui error message">
+                        {{ form.errors }}
+                    </div>
+                    {% for hidden in form.hidden_fields %}
+                        <div class="field">
+                            <input id="avatar_input" type="hidden" name="avatar">
+                        </div>
+                    {% endfor %}
+                    {% for field in form.visible_fields %}
+                        <div class="{{ field.errors|yesno:"error, " }} field">
+                            {{ field.label }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% for field in form.visible_fields %}
+                        <div class="field">
+                            {{ field.label }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% csrf_token %}
+                <button class="ui positive right labeled icon button" type="submit" id="sub-bun" id="window_locate">
+                    Submit it!
+                    <i class="checkmark icon"></i>
+                </button>
+            </form>
+        </div>
     </div>
+
 </div>
 
+<script>
+    $('.photoset-grid-lightbox').photosetGrid({
+        highresLinks: true,
+        rel: 'withhearts-gallery',
+        gutter: '4px',
 
-<section style="padding:30px; background-color: rgba(0,0,0,.04);"></section>
-
-<section id="last-part">
-    <div id="ui comment" style="padding: 30px;">
-        <div class="ui threaded comments">
-            <h3 class="ui dividing header">Comments</h3>
-            {# have no comments #}
-            {% if comments.count == 0 %}
-                <span> No one has been commented, give a comment.</span>
-
-            {% else %}
-
-                {% for comment in comments %}
-                    <div class="ui comment">
-                        <a class="avatar">
-                            {# the photo of my self #}
-                            {% if comment.post_myself %}
-                                <img src="{% static "img/pan.jpg" %}" style="width:35px; height:35px;"
-                                     alt="">
-                            {% else %}
-                                <img src="{% static "comment-avatar.jpg" %}" style="width:35px; height:35px;"
-                                     alt="">
-                            {% endif %}
-                        </a>
-                        <div class="content">
-                            <a class="author">{{ comment.name }}</a>
-
-                            <div class="metadata" id="date">
-                                <span class="date">{{ comment.auto_date }}</span>
-                            </div>
-
-                            <div class="text" style="padding:0;">
-                                {{ comment.comment | custom_markdown }}
-                            </div>
-
-                            <div class="actions">
-                                <a class="reply" onclick="switch_display('write-{{ comment.id }}')">Reply</a>
-                            </div>
-
-                            {# your reply #}
-                            <div id="write-{{ comment.id }}" style="display: none; padding:30px;">
-                                <div class="ui dividing header">
-                                    Your Reply
-                                </div>
-
-                                <form class="ui error tiny form" method="post" action="{% url "comment" detail.id %}"
-                                      style="">
-                                    {#   wrong form     #}
-                                    {% if form.errors %}
-                                        <div class="ui error message">
-                                            {{ form.errors }}
-                                        </div>
-                                        {% for hidden in form.hidden_fields %}
-                                            <div class="field">
-                                                <input id="avatar_input" type="hidden" name="avatar">
-                                            </div>
-                                        {% endfor %}
-                                        {% for field in form.visible_fields %}
-                                            <div class="{{ field.errors|yesno:"error, " }} field">
-                                                {{ field.label }}
-                                                {{ field }}
-                                            </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        {% for field in form.visible_fields %}
-                                            <div class="field">
-                                                {{ field.label }}
-                                                {{ field }}
-                                            </div>
-                                        {% endfor %}
-                                        {% for hidden in form.hidden_fields %}
-                                            <input type="hidden" name="parent" id="id_parent" value="{{ comment.id }}">
-                                        {% endfor %}
-                                    {% endif %}
-                                    {% csrf_token %}
-                                    <button class="ui positive right labeled icon button" type="submit" id="sub-bun"
-                                            id="window_locate">
-                                        Submit it!
-                                        <i class="checkmark icon"></i>
-                                    </button>
-                                </form>
-                            </div>
-
-
-                            {# if it has reply  #}
-                            {% if comment.has_children %}
-                                {# filter the same id parent reply #}
-                                <div class="comments" style="margin-top:10px; padding-top:20px;">
-                                    {% for reply in replys %}
-                                        {% if reply.parent == comment %}
-                                            <div class="comment" style="margin-bottom:35px">
-                                                <a class="avatar">
-                                                    {# the photo of my self #}
-                                                    {% if reply.post_myself %}
-                                                        <img src="{% static "img/pan.jpg" %}"
-                                                             style="width:35px; height:35px;"
-                                                             alt="">
-                                                    {% else %}
-                                                        <img src="{% static "comment-avatar.jpg" %}"
-                                                             style="width:35px; height:35px;"
-                                                             alt="">
-                                                    {% endif %}
-                                                </a>
-                                                <div class="content">
-                                                    <a class="author">{{ reply.name }}</a>
-                                                    <div class="metadata">
-                                                        <span class="date">{{ reply.auto_date }}</span>
-                                                    </div>
-                                                    <div class="text">{{ reply.comment }}</div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    {# endfor the comment #}
-                {% endfor %}
-
-                {# endif the exclude conunt part #}
-            {% endif %}
-
-            <button class="ui right labeled icon button" onclick="switch_display('write-comment')"
-                    style="margin-top:30px;">
-                Write
-                <i class="write icon"></i>
-            </button>
-
-        </div>
-    </div>
-    </div>
-
-    {# comment form #}
-    <div id="write-comment" style="display: none; padding:30px;">
-        <div class="ui dividing header">
-            Your comment
-        </div>
-
-        <form class="ui error tiny form" method="post" action="{% url "comment" detail.id %}" style="">
-            {#   wrong form     #}
-            {% if form.errors %}
-                <div class="ui error message">
-                    {{ form.errors }}
-                </div>
-                {% for hidden in form.hidden_fields %}
-                    <div class="field">
-                        <input id="avatar_input" type="hidden" name="avatar">
-                    </div>
-                {% endfor %}
-                {% for field in form.visible_fields %}
-                    <div class="{{ field.errors|yesno:"error, " }} field">
-                        {{ field.label }}
-                        {{ field }}
-                    </div>
-                {% endfor %}
-            {% else %}
-                {% for field in form.visible_fields %}
-                    <div class="field">
-                        {{ field.label }}
-                        {{ field }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-            {% csrf_token %}
-            <button class="ui positive right labeled icon button" type="submit" id="sub-bun" id="window_locate">
-                Submit it!
-                <i class="checkmark icon"></i>
-            </button>
-        </form>
-    </div>
-
-</section>
-
+        onComplete: function () {
+            $('.photoset-grid-lightbox').attr('style', '');
+            $('.photoset-grid-lightbox a').colorbox({
+                photo: true,
+                scalePhotos: true,
+                maxHeight: '90%',
+                maxWidth: '90%'
+            });
+        }
+    });
+</script>
 
 <script>
-
     function switch_display(id) {
         comment = document.getElementById(id);
         if (comment.style.display == "none") {
@@ -245,7 +281,6 @@
             comment.style.display = "none";
         }
     }
-
 </script>
 </body>
 </html>

@@ -9,6 +9,7 @@ from pygments.formatters import html
 
 register = template.Library()
 
+
 class HighlightRenderer(mistune.Renderer):
     def block_code(self, code, lang=None):
         if not lang:
@@ -23,6 +24,6 @@ class HighlightRenderer(mistune.Renderer):
 @stringfilter
 def custom_markdown(value):
     high_light_render = HighlightRenderer()
-    markdown = mistune.Markdown(renderer=high_light_render)
+    markdown = mistune.Markdown(renderer=high_light_render, escape=False)
     result = force_text(value)
     return mark_safe(markdown(result))
