@@ -1,4 +1,4 @@
-Django==1.11.4
+Django==1.10
 django-markdown==0.8.4
 django-pagedown==1.0.5
 djangorestframework==3.8.2
